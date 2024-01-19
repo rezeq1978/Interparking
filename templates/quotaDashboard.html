@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <title>InterParking</title>
+    <link rel="stylesheet" href="{% static "bootstrap-4.3.1-dist/css/bootstrap.min.css" %}">
+  </head>
+  <body>
+      {% block body_block %}
+      <br><br><br><br><br><br><br><br>
+      <div class="container" align="center">
+        <div class="card {% if parking_load > 50 and parking_load < 100 %}
+                                    border-success
+                                {% elif parking_load > 20 and parking_load < 49 %}
+                                    border-warning
+                                {% elif parking_load >= 0 and parking_load < 19 %}
+                                    border-danger
+                                {% else %}
+                                    border-secondary
+                                {% endif %}
+                                 mb-3 shadow  card" style="max-width: 18rem;">
+          <div class="card-header">{{altf1_data.name}}</div>
+          <div class="card-body {% if parking_load > 50 and parking_load < 100 %}
+                                    text-success
+                                {% elif parking_load > 20 and parking_load < 49 %}
+                                    text-warning
+                                {% elif parking_load >= 0 and parking_load < 19 %}
+                                    text-danger
+                                {% else %}
+                                    text-secondary
+                                {% endif %}">
+            <h5 class="card-title">Parking Capacity ({{altf1_data.maximumValue}})</h5>
+            <h5 class="card-title">Occupied Parking ({{altf1_data.currentValue}})</h5>
+            <h5 class="card-title">Load vs Capacity  ({{parking_load|floatformat}}%)</h5>
+          </div>
+          <a type="button" class="btn btn-primary" href="{% url 'interparking_app:logout' %}">Logout {{user_id}}</a>
+        </div>
+        <br>
+      </div>
+      {% endblock %}
+    </body>
